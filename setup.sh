@@ -335,6 +335,17 @@ function generateAPI(){
     sed -i "s/ARTIFACT/$ArtifactId/g" "${table_name}CRUD.java"
 }
 
+generateController(){
+    local table_name=$1
+    lowercase="${table_name,,}"
+    touch "${table_name}Controller.java"
+    cp controllerFrame.java "${table_name}Controller.java"
+    sed -i "s/TABLENAME/${table_name}/g" "${table_name}Controller.java"
+    sed -i "s/LOWERCASE/${lowercase}/g" "${table_name}Controller.java"
+    sed -i "s/GROUP/$GroupId/g" "${table_name}Controller.java"
+    sed -i "s/ARTIFACT/$ArtifactId/g" "${table_name}Controller.java"
+}
+
 
 # CREATES EVERYTHING
 # CREATES EVERYTHING
@@ -377,6 +388,7 @@ do
 
     # CONTROLLER
     generateAPI $table_name $GroupId $ArtifactId $array $stringArray $length
+    generateController $table_name $GroupId $ArtifactId
     echo "Generating controller..."
     sleep 2
     echo '\\\\\_____________________\"-._ '
