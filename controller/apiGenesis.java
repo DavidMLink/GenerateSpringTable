@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class TABLENAMEsApi {
+public class TABLENAMECRUD {
     private final TABLENAMEService LOWERCASEService;
-    public TABLENAMEsApi(TABLENAMEService LOWERCASEService){
+    public TABLENAMECRUD(TABLENAMEService LOWERCASEService){
         this.LOWERCASEService = LOWERCASEService;
     }
     

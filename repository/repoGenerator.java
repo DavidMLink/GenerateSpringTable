@@ -3,7 +3,7 @@ package com.GROUP.ARTIFACT.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.GROUP.ARTIFACT.model.Book;
+import com.GROUP.ARTIFACT.model.TABLENAME;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
