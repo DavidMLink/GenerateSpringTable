@@ -346,7 +346,6 @@ generateController(){
     sed -i "s/ARTIFACT/$ArtifactId/g" "${table_name}Controller.java"
 }
 
-
 # CREATES EVERYTHING
 # CREATES EVERYTHING
 # CREATES EVERYTHING
@@ -401,6 +400,7 @@ do
 
     echo -n "Do you want to create any more tables(Yes/No): "
     read response
+    cd ..
 done
 
 # END OF CREATES EVERYTHING
