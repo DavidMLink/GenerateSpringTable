@@ -66,9 +66,7 @@ echo -n "What is your GroupId(Be extremely accurate): "
 read GroupId
 echo -n "What is your ArtifactId(Be extremely accurate): "
 read ArtifactId
-array=()
-stringArray=()
-length=0
+
 
 
 function createTable(){
@@ -354,6 +352,9 @@ echo -n "Do you want to create any tables (Yes/No): "
 read response
 while [ $response == "Yes" ] || [ $response == "yes" ] || [ $response == "y" ] || [ $response == "Y" ]
 do
+    array=()
+    stringArray=()
+    length=0
     # MODEL
     echo -n "What is the name of the table(User, Book, Etc): "
     read table_name
