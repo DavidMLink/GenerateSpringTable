@@ -267,7 +267,7 @@ function generateAPI(){
     echo -n '            public TABLENAME create(' >> ${table_name}CRUD.java
     for ((index = 0; index < ${length}; index++)) 
     do
-        echo -n "@RequestParam(value="${array[index]}") ${stringArray[index]}" >> ${table_name}CRUD.java
+        echo -n "@RequestParam(value=\"${array[index]}\") ${stringArray[index]}" >> ${table_name}CRUD.java
     done
     echo ') { ' >> ${table_name}CRUD.java
 
@@ -303,11 +303,11 @@ function generateAPI(){
     echo -n '            public TABLENAME update(@PathVariable("id") Long id,' >> ${table_name}CRUD.java
     for ((index = 0; index < ${length}; index++))
     do
-        echo -n " @RequestParam(value="${array[index]}") ${stringArray[index]}" >> ${table_name}CRUD.java
+        echo -n " @RequestParam(value=\"${array[index]}\") ${stringArray[index]}" >> ${table_name}CRUD.java
     done
     echo  ') { ' >> ${table_name}CRUD.java
 
-    echo -n '                TABLENAME LOWERCASE = new TABLENAME( ' >> ${table_name}CRUD.java
+    echo -n '                TABLENAME LOWERCASE = new TABLENAME(id, ' >> ${table_name}CRUD.java
     for items in "${array[@]}"
     do
         if [ "${array[-1]}" == "${items}" ]
@@ -450,6 +450,8 @@ echo '                                /___/ /___|  '
 # sed
 
 echo "Happy coding!"
+
+read stopProgram
 
 exit
 # END OF CREATE MODELS
