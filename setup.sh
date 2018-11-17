@@ -57,7 +57,8 @@ mkdir model
 mkdir repository
 mkdir service
 mkdir controller
-sleep 1
+sleep 2
+echo ''
 
 # END OF CREATE FOLDERS
 
@@ -66,6 +67,7 @@ echo -n "What is your GroupId(Be extremely accurate): "
 read GroupId
 echo -n "What is your ArtifactId(Be extremely accurate): "
 read ArtifactId
+echo ''
 
 
 
@@ -84,7 +86,6 @@ function createTable(){
     echo ""
     while [ "$count" != "$evaluate" ]
     do
-    echo $count
     #print columns one by one into file
     echo -n "What is the name of the column: "
     read column
@@ -134,6 +135,7 @@ function createTable(){
         echo >> $table_name.java
         echo "    private $datatype $column;" >>  $table_name.java
     fi
+    echo ''
     cat $table_name.java
 
 
@@ -350,6 +352,7 @@ generateController(){
 
 echo -n "Do you want to create any tables (Yes/No): "
 read response
+echo ''
 while [ $response == "Yes" ] || [ $response == "yes" ] || [ $response == "y" ] || [ $response == "Y" ]
 do
     array=()
