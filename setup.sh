@@ -619,18 +619,18 @@ done
 # END OF CREATES EVERYTHING
 # END OF CREATES EVERYTHING
 
-# cd models
-# rm fileGenesis.java
-# rm fileOmega.java
-# cd ..
-# cd repository
-# rm repoGenerator.java
-# cd ..
-# cd service
-# rm serviceGenerator.java
-# cd ..
-# cd controller
-# rm apiGenesis.java
+cd models
+rm fileGenesis.java
+rm fileOmega.java
+cd ..
+cd repository
+rm repoGenerator.java
+cd ..
+cd service
+rm serviceGenerator.java
+cd ..
+cd controller
+rm apiGenesis.java
 
 
 # echo ""
