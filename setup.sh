@@ -124,6 +124,7 @@ function createTable(){
             read min
             echo -n "What is the maximum size of $column: "
             read max
+            echo ""
             # echo >> $table_name.java  CREATES A NEW LINE
             echo >> $table_name.java
             echo '    @Size(min = '"$min"', max = '"$max"')' >> $table_name.java
@@ -135,6 +136,16 @@ function createTable(){
         echo >> $table_name.java
         echo "    private $datatype $column;" >>  $table_name.java
     fi
+
+    # Populate Model with values
+    sed -i "s/TABLENAME/$table_name/" $table_name.java
+    lowercase=$(echo "$table_name" | tr "[:upper:]" "[:lower:]")
+    # or
+    lowercase="${table_name,,}"
+    plural="${lowercase}s"
+    sed -i "s/LOWERCASEPLURAL/$plural/" $table_name.java
+    sed -i "s/PARAMETERSTRING/$stringArray/" $table_name.java
+
     echo "BEGIN OF MODEL"
     echo ''
     cat $table_name.java
@@ -332,7 +343,7 @@ function createTable(){
     echo "        return id;" >> $table_name.java
     echo "    }" >> $table_name.java
     echo "    public void setId(Long id) {" >> $table_name.java
-    echo "        this.id = id" >> $table_name.java
+    echo "        this.id = id;" >> $table_name.java
     echo "    }" >> $table_name.java
 
     for ((index = 0; index < ${length}; index++))
@@ -554,6 +565,7 @@ do
     # MODEL
     echo -n "What is the name of the table(User, Book, Etc): "
     read table_name
+    echo ""
     createTable $table_name
     # END OF MODEL
 
