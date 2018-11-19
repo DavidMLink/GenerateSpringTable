@@ -99,13 +99,11 @@ function createTable(){
     else
         stringArray[count]="${datatype} ${column}, "
     fi
-    echo "${stringArray[@]}"
     # concat="${datatype} ${column}, "
     # stringArray[count]+=${concat}
     datatypeArray[count]=${datatype}
-    echo "${datatypeArray[@]}"
     array[count]+=${column} 
-    echo "${array[@]}"
+    echo ""
     echo -n "Does $column have a size(Yes/No): "
     read response
     if [ $response == "Yes" ] || [ $response == "yes" ] || [ $response == "y" ] || [ $response == "Y" ]
@@ -137,11 +135,15 @@ function createTable(){
         echo >> $table_name.java
         echo "    private $datatype $column;" >>  $table_name.java
     fi
+    echo "BEGIN OF MODEL"
     echo ''
     cat $table_name.java
+    echo ""
+    echo "END OF MODEL"
 
 
 
+    echo ""
     echo ""
     # echo -n "Do you want to create another column(Yes/No): "
     # read response
@@ -164,7 +166,7 @@ function createTable(){
 
 
     #ask user to connect table to another table
-    echo -n "Is this table connected to another one(Yes/No): "
+    echo -n "Do you want to connect ${table_name} table to another table(Yes/No): "
     read rel
     while [ $rel == "Yes" ] || [ $rel == "yes" ] || [ $rel == "y" ] || [ $rel == "Y" ]
     do
@@ -315,7 +317,7 @@ function createTable(){
         MANYTOMANY=0
         NONOWNING=0
         OWNING=0
-    echo -n "Do you want ${table_name} to be connected to another table(Yes/No):"
+    echo -n "Do you want ${table_name} to be connected to any MORE tables(Yes/No):"
     read rel
     done
 
