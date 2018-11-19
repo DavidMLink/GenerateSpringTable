@@ -179,6 +179,10 @@ function createTable(){
     #ask user to connect table to another table
     echo -n "Do you want to connect ${table_name} table to another table(Yes/No): "
     read rel
+    if [ $rel == "Yes" ] || [ $rel == "yes" ] || [ $rel == "y" ] || [ $rel == "Y" ]
+    then
+        echo "    //RELATIONSHIPS BETWEEN TABLES" >> $table_name.java
+    fi
     while [ $rel == "Yes" ] || [ $rel == "yes" ] || [ $rel == "y" ] || [ $rel == "Y" ]
     do
         select relationship in OneToOne OneToMany ManyToMany
@@ -232,7 +236,6 @@ function createTable(){
         lowercaseSecondTable="${secondTable,,}"
         # Lowercase tablename
 
-        echo "    //RELATIONSHIPS BETWEEN TABLES" >> $table_name.java
         echo "" >> $table_name.java
 
         if ((ONETOONE == 1))
@@ -287,7 +290,7 @@ function createTable(){
                 echo "" >> $table_name.java
             else
                 echo "    @ManyToOne(fetch = FetchType.LAZY)" >> $table_name.java
-                echo "    @JoinColumn(name=\"${secondTable}_id\")" >> $table_name.java
+                echo "    @JoinColumn(name=\"${lowercaseSecondTable}_id\")" >> $table_name.java
                 echo "    private ${secondTable} ${lowercaseSecondTable};" >> $table_name.java
                 echo "" >> $table_name.java
                 echo "    public ${secondTable} get${secondTable}() {" >> $table_name.java
