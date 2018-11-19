@@ -80,6 +80,7 @@ function createTable(){
     cp fileGenesis.java $table_name.java
     sed -i "s/GROUP/$GroupId/" $table_name.java
     sed -i "s/ARTIFACT/$ArtifactId/" $table_name.java
+
     #Ask user for columns
     echo -n "How many columns do you want in your table(not including createdAt and updatedAt): "
     read evaluate
@@ -98,10 +99,11 @@ function createTable(){
     else
         stringArray[count]="${datatype} ${column}, "
     fi
-        echo "${stringArray[@]}"
+    echo "${stringArray[@]}"
     # concat="${datatype} ${column}, "
     # stringArray[count]+=${concat}
-
+    datatypeArray[count]=${datatype}
+    echo "${datatypeArray[@]}"
     array[count]+=${column} 
     echo "${array[@]}"
     echo -n "Does $column have a size(Yes/No): "
@@ -160,7 +162,191 @@ function createTable(){
     echo '    private Date updatedAt;' >> $table_name.java
     echo >> $table_name.java
 
+
     #ask user to connect table to another table
+    echo -n "Is this table connected to another one(Yes/No): "
+    read rel
+    while [ $rel == "Yes" ] || [ $rel == "yes" ] || [ $rel == "y" ] || [ $rel == "Y" ]
+    do
+        select relationship in OneToOne OneToMany ManyToMany
+        do
+            case $relationship in 
+            OneToOne)
+                ONETOONE=1
+                break
+                ;;
+            OneToMany)
+                ONETOMANY=1
+                echo ""
+                echo " Keep in mind that the OneToMany table that has the \"one\" MUST be the owner..."
+                sleep 2
+                echo ""
+                break
+                ;;
+            ManyToMany)
+                MANYTOMANY=1
+                echo ""
+                echo " In a Many-to-Many it does not matter which table has ownership..."
+                sleep 1
+                echo ""
+                break
+                ;;
+            *)
+                echo "Please provide a number between (1-3)..."
+            esac
+        done
+        echo "Is this the Owning (1) or non-owning (2) table? (1-2)..."
+        select Side in Owning non-owning
+        do
+            case $Side in
+            Owning)
+                OWNING=1
+                break
+                ;;
+            non-owning)
+                NONOWNING=1
+                break
+                ;;
+            *)
+                echo "Please provide a number between (1-2)..."
+            esac
+        done
+        echo "What is the name of the other table you are connecting to (User, Book, Movie, etc):"
+        read secondTable
+
+        # Lowercase tablename
+        lowercaseFirstTable="${table_name,,}"
+        lowercaseSecondTable="${secondTable,,}"
+        # Lowercase tablename
+
+        echo "    //RELATIONSHIPS BETWEEN TABLES" >> $table_name.java
+        echo "" >> $table_name.java
+
+        if ((ONETOONE == 1))
+        then
+            if ((OWNING == 1))
+            then
+                echo "    @OneToOne(mappedBy=\"${lowercaseFirstTable}\", cascade=CascadeType.ALL, fetch=FetchType.LAZY)" >> $table_name.java
+                echo "    private ${secondTable} ${lowercaseSecondTable};" >> $table_name.java
+                echo "" >> $table_name.java
+                echo "" >> $table_name.java
+                
+                echo "    public ${secondTable} get${secondTable}() {" >> $table_name.java
+                echo "        return ${lowercaseSecondTable};" >> $table_name.java
+                echo "    }" >> $table_name.java
+                echo "" >> $table_name.java
+                echo "    public void set${secondTable}(${secondTable} ${lowercaseSecondTable}) {" >> $table_name.java
+                echo "        this.${lowercaseSecondTable} = ${lowercaseSecondTable};" >> $table_name.java
+                echo "    }" >> $table_name.java
+                echo "" >> $table_name.java
+            else
+                echo "    @OneToOne(fetch=FetchType.LAZY)" >> $table_name.java
+                echo "    @JoinColumn(name=\"${lowercaseSecondTable}_id\")" >> $table_name.java
+                echo "    private ${secondTable} ${lowercaseSecondTable};" >> $table_name.java
+                echo "" >> $table_name.java
+                echo "" >> $table_name.java
+
+                echo "    public ${secondTable} get${secondTable}() {" >> $table_name.java
+                echo "        return ${lowercaseSecondTable};" >> $table_name.java
+                echo "    }" >> $table_name.java
+                echo "" >> $table_name.java
+                echo "    public void set${secondTable}(${secondTable} ${lowercaseSecondTable}) {" >> $table_name.java
+                echo "        this.${lowercaseSecondTable} = ${lowercaseSecondTable};" >> $table_name.java
+                echo "    }" >> $table_name.java
+                echo "" >> $table_name.java
+            fi
+        fi
+        if ((ONETOMANY == 1))
+        then
+            if ((OWNING == 1))
+            then
+                echo "    @OneToMany(mappedBy=\"${lowercaseFirstTable}\", fetch=FetchType.LAZY)" >> $table_name.java
+                echo "    private List<${secondTable}> ${lowercaseSecondTable}s;" >> $table_name.java
+                echo "" >> $table_name.java
+
+                echo "    public List<${secondTable}> get${secondTable}s() {" >> $table_name.java
+                echo "        return ${lowercaseSecondTable}s;" >> $table_name.java
+                echo "    }" >> $table_name.java
+                echo "" >> $table_name.java
+                echo "    public void set${secondTable}s(List<${secondTable}> ${lowercaseSecondTable}s) {" >> $table_name.java
+                echo "        this.${lowercaseSecondTable}s = ${lowercaseSecondTable}s;" >> $table_name.java
+                echo "    }" >> $table_name.java
+                echo "" >> $table_name.java
+            else
+                echo "    @ManyToOne(fetch = FetchType.LAZY)" >> $table_name.java
+                echo "    @JoinColumn(name=\"${secondTable}_id\")" >> $table_name.java
+                echo "    private ${secondTable} ${lowercaseSecondTable};" >> $table_name.java
+                echo "" >> $table_name.java
+                echo "    public ${secondTable} get${secondTable}() {" >> $table_name.java
+                echo "        return ${lowercaseSecondTable};" >> $table_name.java
+                echo "    }" >> $table_name.java
+                echo "" >> $table_name.java
+                echo "    public void set${secondTable}(${secondTable} ${lowercaseSecondTable}) {" >> $table_name.java
+                echo "        this.${lowercaseSecondTable} = ${lowercaseSecondTable};" >> $table_name.java
+                echo "    }" >> $table_name.java
+                echo ""
+            fi
+        fi
+        if (( MANYTOMANY == 1))
+        then
+            echo "    @ManyToMany(fetch = FetchType.LAZY)" >> $table_name.java
+            echo "    @JoinTable(" >> $table_name.java
+            echo "        name = \"${lowercaseFirstTable}s_${lowercaseSecondTable}s\")," >> $table_name.java
+            echo "        joinColumns = @JoinColumn(name = \"${lowercaseFirstTable}_id\")," >> $table_name.java
+            echo "        inverseJoinColumns = @JoinColumn(name = \"${lowercaseSecondTable}_id\"" >> $table_name.java
+            echo "    )" >> $table_name.java
+
+            echo "" >> $table_name.java
+            echo "    private List<${secondTable}> ${lowercaseSecondTable}s;" >> $table_name.java
+            echo "" >> $table_name.java
+
+            echo "    public List<${secondTable}> get${secondTable}s() {" >> $table_name.java
+            echo "        return ${lowercaseSecondTable}s;" >> $table_name.java
+            echo "    }" >> $table_name.java
+            echo "" >> $table_name.java
+            echo "    public void set${secondTable}s(List<${secondTable}> ${lowercaseSecondTable}s) {" >> $table_name.java
+            echo "        this.${lowercaseSecondTable}s = ${lowercaseSecondTable}s;" >> $table_name.java
+            echo "    }" >> $table_name.java
+            echo "" >> $table_name.java
+        fi
+
+        ONETOONE=0
+        ONETOMANY=0
+        MANYTOMANY=0
+        NONOWNING=0
+        OWNING=0
+    echo -n "Do you want ${table_name} to be connected to another table(Yes/No):"
+    read rel
+    done
+
+    echo "" >> $table_name.java
+    echo "    //END OF RELATIONSHIPS BETWEEN TABLES" >> $table_name.java
+    echo "" >> $table_name.java
+    echo "" >> $table_name.java
+    echo "    //GETTERS AND SETTERS" >> $table_name.java
+
+    echo "" >> $table_name.java
+    echo "    public Long getId() {" >> $table_name.java
+    echo "        return id;" >> $table_name.java
+    echo "    }" >> $table_name.java
+    echo "    public void setId(Long id) {" >> $table_name.java
+    echo "        this.id = id" >> $table_name.java
+    echo "    }" >> $table_name.java
+
+    for ((index = 0; index < ${length}; index++))
+    do
+        echo "    public ${datatypeArray[index]} get${array[index]^}() {" >> $table_name.java
+        echo "        return ${array[index],,};" >> $table_name.java
+        echo "    }" >> $table_name.java
+        echo "    public void set${array[index]^}(${datatypeArray[index]} ${array[index]})" { >> $table_name.java
+        echo "        this.${array[index],,} = ${array[index],,};" >> $table_name.java
+        echo "}" >> $table_name.java
+    done
+
+    echo "" >> $table_name.java
+    echo "    //END OF GETTERS AND SETTERS" >> $table_name.java
+    echo "" >> $table_name.java
+    echo "" >> $table_name.java
 
     # Generate End of Table
     # cat fileOmega.java >> $table_name.java
@@ -358,6 +544,11 @@ do
     array=()
     stringArray=()
     length=0
+    ONETOONE=0
+    ONETOMANY=0
+    MANYTOMANY=0
+    NONOWNING=0
+    OWNING=0
     # MODEL
     echo -n "What is the name of the table(User, Book, Etc): "
     read table_name
