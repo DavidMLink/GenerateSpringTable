@@ -619,7 +619,7 @@ done
 # END OF CREATES EVERYTHING
 # END OF CREATES EVERYTHING
 
-cd models
+cd model
 rm fileGenesis.java
 rm fileOmega.java
 cd ..
@@ -630,6 +630,7 @@ cd service
 rm serviceGenerator.java
 cd ..
 cd controller
+rm controllerFrame.java
 rm apiGenesis.java
 
 
