@@ -53,10 +53,10 @@ fi
 # CREATE FOLDERS
 
 echo "Creating folders..."
-mkdir model
-mkdir repository
-mkdir service
-mkdir controller
+mkdir models
+mkdir repositories
+mkdir services
+mkdir controllers
 sleep 2
 echo ''
 
@@ -75,7 +75,7 @@ function createTable(){
     local table_name=$1
     local count=0
     # Create model file
-    cd model
+    cd models
     touch $table_name.java
     cp fileGenesis.java $table_name.java
     sed -i "s/GROUP/$GroupId/" $table_name.java
@@ -436,7 +436,7 @@ function generateRepository(){
     local table_name=$1
 
     cd ..
-    cd repository
+    cd repositories
     touch "${table_name}Repository.java"
     cp repoGenerator.java "${table_name}Repository.java"
 
@@ -449,7 +449,7 @@ function generateService(){
     local table_name=$1
     lowercase="${table_name,,}"
     cd ..
-    cd service
+    cd services
     touch "${table_name}Service.java"
     cp serviceGenerator.java "${table_name}Service.java"
     sed -i "s/TABLENAME/${table_name}/g" "${table_name}Service.java"
@@ -462,7 +462,7 @@ function generateAPI(){
     local table_name=$1
     lowercase="${table_name,,}"
     cd ..
-    cd controller
+    cd controllers
     touch "${table_name}CRUD.java"
     cp apiGenesis.java "${table_name}CRUD.java"
     echo "" >> ${table_name}CRUD.java
@@ -619,17 +619,17 @@ done
 # END OF CREATES EVERYTHING
 # END OF CREATES EVERYTHING
 
-cd model
+cd models
 rm fileGenesis.java
 rm fileOmega.java
 cd ..
-cd repository
+cd repositories
 rm repoGenerator.java
 cd ..
-cd service
+cd services
 rm serviceGenerator.java
 cd ..
-cd controller
+cd controllers
 rm controllerFrame.java
 rm apiGenesis.java
 
