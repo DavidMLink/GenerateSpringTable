@@ -1,9 +1,9 @@
-package com.GROUP.ARTIFACT.controller;
+package com.GROUP.ARTIFACT.controllers;
 
 import java.util.List;
 
-import com.GROUP.ARTIFACT.model.TABLENAME;
-import com.GROUP.ARTIFACT.service.TABLENAMEService;
+import com.GROUP.ARTIFACT.models.TABLENAME;
+import com.GROUP.ARTIFACT.services.TABLENAMEService;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

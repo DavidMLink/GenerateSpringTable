@@ -1,11 +1,11 @@
-package com.GROUP.ARTIFACT.controller;
+package com.GROUP.ARTIFACT.controllers;
 
 import java.util.List;
 
 import javax.validation.Valid;
 
-import com.GROUP.ARTIFACT.model.TABLENAME;
-import com.GROUP.ARTIFACT.service.TABLENAMEService;
+import com.GROUP.ARTIFACT.models.TABLENAME;
+import com.GROUP.ARTIFACT.services.TABLENAMEService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

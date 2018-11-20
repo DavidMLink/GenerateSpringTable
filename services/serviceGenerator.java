@@ -1,12 +1,12 @@
-package com.GROUP.ARTIFACT.service;
+package com.GROUP.ARTIFACT.services;
 
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.GROUP.ARTIFACT.model.TABLENAME;
-import com.GROUP.ARTIFACT.repository.TABLENAMERepository;
+import com.GROUP.ARTIFACT.models.TABLENAME;
+import com.GROUP.ARTIFACT.repositories.TABLENAMERepository;
 
 @Service
 public class TABLENAMEService {

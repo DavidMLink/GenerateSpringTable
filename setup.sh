@@ -203,7 +203,6 @@ function createTable(){
             ManyToMany)
                 MANYTOMANY=1
                 echo ""
-                echo " In a Many-to-Many it does not matter which table has ownership..."
                 sleep 1
                 echo ""
                 break
@@ -289,7 +288,7 @@ function createTable(){
                 echo "    }" >> $table_name.java
                 echo "" >> $table_name.java
             else
-                echo "    @ManyToOne(fetch = FetchType.LAZY)" >> $table_name.java
+                echo "    @ManyToOne(fetch = FetchType.LAZY) " >> $table_name.java
                 echo "    @JoinColumn(name=\"${lowercaseSecondTable}_id\")" >> $table_name.java
                 echo "    private ${secondTable} ${lowercaseSecondTable};" >> $table_name.java
                 echo "" >> $table_name.java
@@ -307,9 +306,14 @@ function createTable(){
         then
             echo "    @ManyToMany(fetch = FetchType.LAZY)" >> $table_name.java
             echo "    @JoinTable(" >> $table_name.java
-            echo "        name = \"${lowercaseFirstTable}s_${lowercaseSecondTable}s\")," >> $table_name.java
+            if ((OWNING == 1))
+            then
+                echo "        name = \"${lowercaseFirstTable}s_${lowercaseSecondTable}s\"," >> $table_name.java
+            else
+                echo "        name = \"${lowercaseSecondTable}s_${lowercaseFirstTable} s\"," >> $table_name.java
+            fi
             echo "        joinColumns = @JoinColumn(name = \"${lowercaseFirstTable}_id\")," >> $table_name.java
-            echo "        inverseJoinColumns = @JoinColumn(name = \"${lowercaseSecondTable}_id\"" >> $table_name.java
+            echo "        inverseJoinColumns = @JoinColumn(name = \"${lowercaseSecondTable}_id\")" >> $table_name.java
             echo "    )" >> $table_name.java
 
             echo "" >> $table_name.java

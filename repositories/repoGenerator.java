@@ -1,9 +1,9 @@
-package com.GROUP.ARTIFACT.repository;
+package com.GROUP.ARTIFACT.repositories;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.GROUP.ARTIFACT.model.TABLENAME;
+import com.GROUP.ARTIFACT.models.TABLENAME;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
