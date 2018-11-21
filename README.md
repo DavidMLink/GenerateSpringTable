@@ -5,4 +5,6 @@
 	
 #### Make sure you have a basic understanding of owning and non-owning before using the relationship feature.
 	
-#### Warning: This will overwrite files if files are named exactly the same.
+#### WARNING This will overwrite files if files are named exactly the same.
+
+#### Annotations supported are @Size for Strings and @Min and @Max for Integers
