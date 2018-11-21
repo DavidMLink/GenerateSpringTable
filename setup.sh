@@ -604,6 +604,7 @@ do
     # CONTROLLER
     generateAPI $table_name $GroupId $ArtifactId $array $stringArray $length
     generateController $table_name $GroupId $ArtifactId
+    sed -i "s/TABLENAME/${table_name}/g" "${table_name}CRUD.java"
     echo "Generating controller..."
     sleep 2
     echo '\\\\\_____________________\"-._ '
