@@ -2,7 +2,7 @@
 
 # Grep stands for globabally search a Regular Expression then print
 
-echo -n "Run LinkisAwesome(Yes/No): "
+echo -n "Run Generate Program(Yes/No): "
 
 read response
 
