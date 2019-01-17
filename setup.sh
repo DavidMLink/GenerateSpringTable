@@ -88,7 +88,7 @@ function createTable(){
     while [ "$count" != "$evaluate" ]
     do
     #print columns one by one into file
-    echo -n "What is the name of the column: "
+    echo -n "What is the name of the column (lowercase): "
     read column
     echo -n "What is the datatype of $column(String, Integer, Etc): "
     read datatype
