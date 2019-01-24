@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Grep stands for globabally search a Regular Expression then print
+# Grep stands for globally search a Regular Expression then print
 
 echo -n "Run Generate Program(Yes/No): "
 
