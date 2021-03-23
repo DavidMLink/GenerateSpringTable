@@ -1,7 +1,7 @@
 # Version 2.0
 ## This version allows you to add relationships between tables meaning One to One, One To Many, and Many To Many! 🧪
 
-[backendSpringGenerator](https://user-images.githubusercontent.com/42443696/112230268-07e66280-8c0b-11eb-92e5-7326e18044b6.PNG)
+![backendSpringGenerator](https://user-images.githubusercontent.com/42443696/112230268-07e66280-8c0b-11eb-92e5-7326e18044b6.PNG)
 
 ![folderStructure](https://user-images.githubusercontent.com/42443696/112230316-1d5b8c80-8c0b-11eb-8b7b-03acf6c5c04b.PNG)
 
