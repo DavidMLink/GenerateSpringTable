@@ -1,5 +1,5 @@
 # GenerateSpringTable V2 (Added Relationship Functionality 🧪)
-## Terminal prompts that generate boilerplate CRUD application
+## Terminal prompts that generate your backend boilerplate CRUD application
 ## Technologies
 - Bash Shell Script (Linux commands)
 
